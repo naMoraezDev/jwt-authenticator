@@ -4,7 +4,7 @@ import { setupApiClient } from "@/services/api";
 import { withSSRAuth } from "@/utils/withSSRAuth";
 
 export default function Dashboard() {
-  const { user, isAuthenticated } = useAuth();
+  const { user } = useAuth();
 
   return (
     <>
@@ -21,8 +21,6 @@ export const getServerSideProps = withSSRAuth(async (context) => {
   const apiClient = setupApiClient(context);
 
   const response = await apiClient.get("/me");
-
-  console.log(response.data);
 
   return {
     props: {},
