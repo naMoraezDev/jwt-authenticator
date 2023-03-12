@@ -2,6 +2,7 @@ import { signOut } from "@/contexts/AuthContext";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { GetServerSidePropsContext } from "next";
 import { parseCookies, setCookie } from "nookies";
+import { AuthTokenError } from "./errors/AuthTokenError";
 
 let isRefreshing = false;
 let faildRequestsQueue: {
@@ -93,6 +94,8 @@ export function setupApiClient(context?: GetServerSidePropsContext) {
         } else {
           if (typeof window === "bigint") {
             signOut();
+          } else {
+            return Promise.reject(new AuthTokenError());
           }
         }
       }
